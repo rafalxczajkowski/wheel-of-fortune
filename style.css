@@ -1,0 +1,10 @@
+canvas {
+  /* border: 1px solid red; */
+  transition: transform 10s cubic-bezier(0.4, 0, 0.001, 1);
+}
+
+#canvas-container {
+  /* border: 1px solid green; */
+  display: flex;
+  justify-content: center;
+}
