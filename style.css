@@ -1,10 +1,95 @@
+:root {
+  --wheel-size: 100vmin;
+  --pointer-size: 25vmin;
+  --background-color: #0c2d48;
+  --sidebar-color: #145da0;
+  --sidebar-text-color: white;
+  --text-hover-color: #2e8bc0;
+}
+
+body {
+  background-color: var(--background-color);
+  font-family: 'Poppins', sans-serif;
+}
+
+.main-container {
+  display: flex;
+  justify-content: center;
+}
+
+.wheel-container {
+  border: 1px solid green; /* dev */
+  width: var(--wheel-size);
+  height: var(--wheel-size);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 canvas {
-  /* border: 1px solid red; */
+  border: 1px solid red; /* dev */
+  width: 90%;
+  object-fit: contain;
   transition: transform 10s cubic-bezier(0.4, 0, 0.001, 1);
 }
 
-#canvas-container {
-  /* border: 1px solid green; */
+.pointer-container {
+  border: 1px solid orange; /* dev */
+  height: var(--pointer-size);
+  position: absolute;
+}
+
+.pointer-image {
+  height: 100%;
+}
+
+.side-nav {
+  height: 100%;
+  width: 300px; /* dev */
+  position: fixed;
+  right: 0;
+  top: 0;
+  background-color: var(--sidebar-color);
+  padding-top: 100px;
+  transform: translateX(100%);
+  transition: 0.5s;
+}
+
+.visible {
+  transform: translateX(0%);
+}
+
+.side-nav .side-nav-element {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  padding: 8px 16px 8px 16px;
+}
+
+.side-nav .side-nav-element .nav-element-text {
+  background-color: var(--sidebar-color);
+  color: var(--sidebar-text-color);
+  border: none;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.side-nav .side-nav-element:hover {
+  color: var(--text-hover-color);
+}
+
+.close-btn {
+  position: fixed;
+  top: 30px;
+  right: 45px;
+  font-size: 45px;
+  /* margin-right: 50px; */
+}
+
+@media screen and (max-width: 600px) {
+  .side-nav {
+    width: 100%;
+  }
+  .side-nav .side-nav-element {
+    justify-content: space-evenly;
+  }
 }

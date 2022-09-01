@@ -1,18 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Wheel of Fortune</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-  <div id="main-container">
-    <div id="canvas-container">
-      <canvas id="main-canvas" width="800" height="800"></canvas>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Wheel of Fortune</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+      integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="wheel-container">
+        <canvas class="main-canvas" width="1200" height="1200"></canvas>
+        <div class="pointer-container">
+          <img
+            class="pointer-image"
+            src="./images/carrot.png"
+            alt="Realistic carrot"
+          />
+        </div>
+      </div>
+      <div class="side-nav">
+        <!-- <input type="text" class="nav-element-text" value="Koko">
+        <input type="text" class="nav-element-text" value="Boku Ga!">
+        <input type="text" class="nav-element-text" value="Songo Ku"> -->
+      </div>
+      <a href="javascript:void(0)" class="close-btn" onclick="toggleNav()"
+        ><i class="close-img fa-solid fa-angles-left"></i
+      ></a>
     </div>
-  </div>
-
-  <script src="app.js"></script>
-</body>
+    <script src="app.js"></script>
+  </body>
 </html>
