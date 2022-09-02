@@ -4,9 +4,10 @@ const ctx = canvas.getContext('2d')
 const sideNav = document.getElementsByClassName('side-nav')[0]
 const closeImg = document.getElementsByClassName('close-img')[0]
 const wheelOptions = []
+
 if (localStorage.length === 0) {
-  // default data
-  console.log('localStorage is empty!')
+  // default data fill
+  console.log('localStorage is empty!') //dev
   wheelOptions.push(
     {
       name: 'Pizza',
@@ -38,10 +39,20 @@ if (localStorage.length === 0) {
   //   wheelOptions.push(key)
   // })
 }
+
+function toOneObject(arr) {
+  const newarr = []
+  forEach()
+}
+
 const vname = 'name'+'01'
 console.log(vname)
+console.log(wheelOptions)
 console.log(localStorage)
 console.log(wheelOptions[3]['name'+'01'])
+console.log(wheelOptions[3].index)
+
+
 
 function populate() {
   const numberOfOptions = wheelOptions.length
