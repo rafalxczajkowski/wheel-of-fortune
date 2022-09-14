@@ -5,6 +5,11 @@ const sideNav = document.getElementsByClassName('side-nav')[0]
 const closeImg = document.getElementsByClassName('close-img')[0]
 const wheelOptions = []
 
+// const mongoose = require('mongoose')
+// mongoose.connect(
+//   'mongodb+srv://rafal:zwyklaSwinia_@mycluster.idj3se9.mongodb.net/wheel-of-fortune?retryWrites=true&w=majority'
+// )
+
 require('dotenv').config()
 console.log(process.env) // remove this after you've confirmed it working
 
