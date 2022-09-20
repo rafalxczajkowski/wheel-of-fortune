@@ -1,119 +1,21 @@
-const canvas = document.getElementById('main-canvas')
-const canvasSize = canvas.width
-const ctx = canvas.getContext('2d')
-const sideNav = document.getElementsByClassName('side-nav')[0]
-const closeImg = document.getElementsByClassName('close-img')[0]
-const wheelOptions = []
-
-// const mongoose = require('mongoose')
-// mongoose.connect(
-//   'mongodb+srv://rafal:zwyklaSwinia_@mycluster.idj3se9.mongodb.net/wheel-of-fortune?retryWrites=true&w=majority'
-// )
-
+const express = require('express')
+const path = require('path')
+const mongoose = require('mongoose')
 require('dotenv').config()
-console.log(process.env) // remove this after you've confirmed it working
 
-if (localStorage.length === 0) {
-  // default data fill
-  console.log('localStorage is empty!') //dev
-  wheelOptions.push(
-    {
-      name: 'Pizza',
-      color: '#F94892',
-    },
-    {
-      name: 'Yoghurt with musli',
-      color: '#FF7F3F',
-    },
-    {
-      name: 'Scrambled eggs',
-      color: '#FBDF07',
-    },
-    {
-      name01: 'Sushi',
-      color: '#89CFFD',
-    },
-    {
-      name: 'Kebab',
-      color: '#FBE7C6',
-    }
-  )
-} else {
-  wheelOptions.push({
-    name: 'taco',
-    color: '#FBE7C6',
-  })
-  // localStorage.forEach((key, value) => {
-  //   wheelOptions.push(key)
-  // })
-}
+mongoose.connect(process.env.MONGO_URI, console.log('Connected to database'))
 
-function toOneObject(arr) {
-  const newarr = []
-  forEach()
-}
+const indexRouter = require('./routes/index')
 
-const vname = 'name' + '01'
-console.log(vname)
-console.log(wheelOptions)
-console.log(localStorage)
-console.log(wheelOptions[3]['name' + '01'])
-console.log(wheelOptions[3].index)
+const app = express()
 
-function populate() {
-  const numberOfOptions = wheelOptions.length
-  let startAngle = 0
-  const angleOfOption = (2 * Math.PI) / numberOfOptions
-  wheelOptions.forEach((wheelOption) => {
-    let endAngle = startAngle + angleOfOption
-    ctx.fillStyle = wheelOption.color
-    ctx.beginPath()
-    ctx.moveTo(canvasSize / 2, canvasSize / 2)
-    ctx.arc(
-      canvasSize / 2,
-      canvasSize / 2,
-      canvasSize / 2,
-      startAngle,
-      endAngle
-    )
-    ctx.fill()
-    startAngle = endAngle
+// app.set('views', path.join(__dirname, 'views'))
+app.set('views', './views')
+app.set('view engine', 'pug')
 
-    ctx.font = '40px Poppins'
-    ctx.translate(canvasSize / 2, canvasSize / 2)
-    ctx.rotate(startAngle - angleOfOption / 2)
-    ctx.fillStyle = 'black'
-    ctx.textAlign = 'center'
-    ctx.fillText(wheelOption.name, canvasSize * 0.3, 15)
-    ctx.resetTransform()
+// app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static('public'))
 
-    const sideNavElement = document.createElement('div')
-    sideNavElement.classList.add('side-nav-element')
+app.use('/', indexRouter)
 
-    sideNav.append(sideNavElement)
-    const sideNavElTextField = document.createElement('input')
-    sideNavElTextField.classList.add('nav-element-text')
-    sideNavElTextField.value = wheelOption.name
-    sideNavElement.append(sideNavElTextField)
-
-    const sideNavElColor = document.createElement('input')
-    sideNavElColor.classList.add('color-picker')
-    sideNavElColor.type = 'color'
-    sideNavElColor.value = wheelOption.color
-    sideNavElement.append(sideNavElColor)
-  })
-}
-
-let rotation = 3
-canvas.addEventListener('click', () => {
-  rotation += 5 + Math.random() * 10
-  canvas.style.transform = 'rotate(' + rotation + 'turn)'
-})
-
-function toggleNav() {
-  sideNav.classList.toggle('visible')
-  closeImg.classList.toggle('fa-angles-left')
-  closeImg.classList.toggle('fa-angles-right')
-}
-
-populate()
+app.listen(process.env.PORT || 3000)
