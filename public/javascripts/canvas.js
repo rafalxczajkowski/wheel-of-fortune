@@ -1,6 +1,3 @@
-import mongoose from 'mongoose'
-import WheelOption from './models/WheelOption'
-
 const canvas = document.getElementById('main-canvas')
 const canvasSize = canvas.width
 const ctx = canvas.getContext('2d')
@@ -8,13 +5,6 @@ const sideNav = document.getElementsByClassName('side-nav')[0]
 const closeImg = document.getElementsByClassName('close-img')[0]
 const wheelOptions = []
 
-// require('dotenv').config()
-// console.log(process.env) // remove this after you've confirmed it working
-
-mongoose.connect(
-  'mongodb+srv://rafal:zwyklaSwinia_@mycluster.idj3se9.mongodb.net/wheel-of-fortune?retryWrites=true&w=majority',
-  console.log('Connected to database')
-)
 async function run() {
   const newWheelOption = await create({
     name: 'Makaroniki',
@@ -57,18 +47,6 @@ if (localStorage.length === 0) {
   //   wheelOptions.push(key)
   // })
 }
-
-function toOneObject(arr) {
-  const newarr = []
-  forEach()
-}
-
-const vname = 'name' + '01'
-console.log(vname)
-console.log(wheelOptions)
-console.log(localStorage)
-console.log(wheelOptions[3]['name' + '01'])
-console.log(wheelOptions[3].index)
 
 function populate() {
   const numberOfOptions = wheelOptions.length

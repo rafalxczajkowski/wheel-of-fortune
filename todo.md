@@ -1,6 +1,5 @@
 # Wheel of Fortune todo
 
-- create pug layout from html file
 - pull data from sidebar fields
 - send data to db
 - recover data from db after launching the app
@@ -11,4 +10,4 @@
 - add **caption** appearing with the winning option
 - add **sound** of drawing
 
-git add . && git commit -m 'change' && git push
+git add . && git commit -m 'MESSAGE' && git push
