@@ -1,57 +1,34 @@
-const canvas = document.getElementById('main-canvas')
-const canvasSize = canvas.width
-const ctx = canvas.getContext('2d')
-const sideNav = document.getElementsByClassName('side-nav')[0]
-const closeImg = document.getElementsByClassName('close-img')[0]
-const wheelOptions = []
-
-async function run() {
-  const newWheelOption = await create({
-    name: 'Makaroniki',
-    color: 'black',
-  })
-  console.log(newWheelOption)
-}
-
-if (localStorage.length === 0) {
-  // default data fill
-  console.log('localStorage is empty!') //dev
-  wheelOptions.push(
-    {
-      name: 'Pizza',
-      color: '#F94892',
-    },
-    {
-      name: 'Yoghurt with musli',
-      color: '#FF7F3F',
-    },
-    {
-      name: 'Scrambled eggs',
-      color: '#FBDF07',
-    },
-    {
-      name01: 'Sushi',
-      color: '#89CFFD',
-    },
-    {
-      name: 'Kebab',
-      color: '#FBE7C6',
-    }
-  )
-} else {
-  wheelOptions.push({
-    name: 'taco',
-    color: '#FBE7C6',
-  })
-  // localStorage.forEach((key, value) => {
-  //   wheelOptions.push(key)
-  // })
-}
-
-function populate() {
-  const numberOfOptions = wheelOptions.length
+function drawWheel(wheelOptions) {
+  let rotation = 0
   let startAngle = 0
+  let canvas
+  let spinTime = 7
+  let isRunning = false
+  document.documentElement.style.setProperty('--spin-time', spinTime + 's')
+  let winOptionIndex
+  const resultDiv = document.querySelector('.result-caption')
+  const wheelAudio = new Audio('../sounds/prize-wheel.wav')
+  const resultAudio = new Audio('../sounds/win-sound.wav')
+
+  const numberOfOptions = wheelOptions.length
   const angleOfOption = (2 * Math.PI) / numberOfOptions
+
+  if (document.querySelector('.main-canvas')) {
+    canvas = document.querySelector('.main-canvas')
+    canvas.remove()
+  }
+
+  // canvas
+  canvas = document.createElement('canvas')
+  canvas.classList.add('main-canvas')
+  canvas.setAttribute('width', '1200')
+  canvas.setAttribute('height', '1200')
+  const wheelContainer = document.querySelector('.wheel-container')
+  wheelContainer.prepend(canvas)
+
+  const canvasSize = canvas.width
+  const ctx = canvas.getContext('2d')
+
   wheelOptions.forEach((wheelOption) => {
     let endAngle = startAngle + angleOfOption
     ctx.fillStyle = wheelOption.color
@@ -74,34 +51,30 @@ function populate() {
     ctx.textAlign = 'center'
     ctx.fillText(wheelOption.name, canvasSize * 0.3, 15)
     ctx.resetTransform()
-
-    const sideNavElement = document.createElement('div')
-    sideNavElement.classList.add('side-nav-element')
-
-    sideNav.append(sideNavElement)
-    const sideNavElTextField = document.createElement('input')
-    sideNavElTextField.classList.add('nav-element-text')
-    sideNavElTextField.value = wheelOption.name
-    sideNavElement.append(sideNavElTextField)
-
-    const sideNavElColor = document.createElement('input')
-    sideNavElColor.classList.add('color-picker')
-    sideNavElColor.type = 'color'
-    sideNavElColor.value = wheelOption.color
-    sideNavElement.append(sideNavElColor)
   })
+
+  async function spin() {
+    if (!isRunning) {
+      isRunning = true
+      wheelAudio.play()
+      rotation += 5 + Math.random() * 10
+      canvas.style.transform = 'rotate(' + rotation + 'turn)'
+      winOptionIndex = Math.floor(
+        (((rotation - 0.75) % 1) * -1 + 1) * numberOfOptions
+      )
+      await new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resultDiv.classList.toggle('visible-div')
+          resultDiv.innerHTML = wheelOptions[winOptionIndex].name
+          resultAudio.play()
+          setTimeout(resolve, 1000)
+        }, spinTime * 1000)
+      })
+      isRunning = false
+    }
+  }
+
+  canvas.addEventListener('click', spin)
 }
 
-let rotation = 3
-canvas.addEventListener('click', () => {
-  rotation += 5 + Math.random() * 10
-  canvas.style.transform = 'rotate(' + rotation + 'turn)'
-})
-
-function toggleNav() {
-  sideNav.classList.toggle('visible')
-  closeImg.classList.toggle('fa-angles-left')
-  closeImg.classList.toggle('fa-angles-right')
-}
-
-populate()
+export default drawWheel

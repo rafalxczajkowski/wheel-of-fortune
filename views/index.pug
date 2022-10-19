@@ -2,13 +2,11 @@ extends layout
 
 block content
   .main-container
+    .result-caption
     .wheel-container
-      canvas(id='main-canvas' width='1200' height='1200')
       .pointer-container
         img(class='pointer-image' src='images/carrot.png', alt='Realistic carrot')
     .side-nav
-    a(href='javascript:void(0)' class='close-btn' onclick='toggleNav()')
+      i(class='add-btn fa-solid fa-plus')
+    a(href='javascript:void(0)' class='close-btn')
       i(class='close-img fa-solid fa-angles-left')
-  script(src='javascripts/canvas.js') 
-  //- h1= title
-  //- p Welcome message #{message}
