@@ -96,7 +96,6 @@ async function deleteWheelOption(id) {
 }
 
 function populateNav(wheelOptions) {
-  // if (document.querySelector('.options-container'))
   let optionsContainer = document.querySelector('.options-container')
   if (optionsContainer) {
     optionsContainer.remove()
