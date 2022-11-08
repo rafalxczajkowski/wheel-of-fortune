@@ -126,7 +126,14 @@ canvas {
   color: white;
 }
 
+.add-btn:hover {
+  background-color: var(--secondary-color);
+}
+
 .add-btn {
+  /* width: 70px; */
+  padding: 0px 30px 0 30px;
+  border-radius: 5px;
   font-size: 35px;
   color: var(--third-color);
   transition: 0.3s;
