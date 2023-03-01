@@ -1,3 +1,3 @@
 # wheel-of-fortune
 
-git add .
+git add . & git commit -m 'Changes' & git push
