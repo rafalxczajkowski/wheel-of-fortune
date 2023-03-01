@@ -14,7 +14,7 @@ const defaultData = [
     color: '#FBDF07',
   },
   {
-    name01: 'Sushi',
+    name: 'Sushi',
     color: '#89CFFD',
   },
   {
@@ -22,6 +22,70 @@ const defaultData = [
     color: '#FBE7C6',
   },
 ]
+
+let userId
+
+async function populate() {
+  try {
+    userId = await getUserId()
+    const userWheelOptions = await getUserWheelOptions(userId)
+    populateNav(userWheelOptions)
+    drawWheel(userWheelOptions)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+populate()
+
+// Get data from db
+async function getUserWheelOptions(userId) {
+  try {
+    const { data: wheelOptionsRes } = await axios.get('/api/v1/wheeloptions', {
+      params: { uid: userId },
+    })
+    return wheelOptionsRes
+  } catch (error) {
+    console.error(error.name, ':', error.message)
+    localStorage.clear()
+    populate()
+  }
+}
+
+async function getUserId() {
+  const userId_localStorage = localStorage.getItem('userId')
+  if (!userId_localStorage) {
+    return await createUser()
+  }
+  return userId_localStorage
+}
+
+async function createUser() {
+  try {
+    const res = await axios.post('/api/v1/users', {})
+    const userId_new = res.data._id
+    localStorage.setItem('userId', userId_new)
+    console.log(`new user created, id: ${userId_new}`)
+    await setDefaultWheelOptions(userId_new)
+    return userId_new
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+async function setDefaultWheelOptions(userId) {
+  for (const item of defaultData) {
+    try {
+      await axios.post('/api/v1/wheeloptions', {
+        name: item.name,
+        color: item.color,
+        createdBy: userId,
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
 
 const closeImg = document.querySelector('.close-img')
 const sideNav = document.querySelector('.side-nav')
@@ -47,6 +111,7 @@ addButton.addEventListener('click', async () => {
     await axios.post('/api/v1/wheeloptions', {
       name: '',
       color: randomColor(),
+      createdBy: userId,
     })
     await populate()
   } catch (error) {
@@ -57,22 +122,6 @@ addButton.addEventListener('click', async () => {
 function randomColor() {
   let colorStr = Math.floor(Math.random() * 16777216).toString(16)
   return '#' + colorStr.padStart(6, '0')
-}
-
-// Get data from db
-async function getWheelOptions() {
-  try {
-    const { data: wheelOptionsRes } = await axios.get('/api/v1/wheeloptions')
-    const numberOfOptions = wheelOptionsRes.length
-
-    if (numberOfOptions === 0) {
-      return defaultData
-    } else {
-      return wheelOptionsRes
-    }
-  } catch (error) {
-    console.log(error)
-  }
 }
 
 // Update data in db
@@ -128,11 +177,11 @@ function populateNav(wheelOptions) {
 
     sideNavElementText.addEventListener('change', async () => {
       await update(wheelOption._id, sideNavElementText.value, 'name')
-      drawWheel(await getWheelOptions())
+      drawWheel(await getUserWheelOptions(userId))
     })
     sideNavElementColor.addEventListener('change', async () => {
       await update(wheelOption._id, sideNavElementColor.value, 'color')
-      drawWheel(await getWheelOptions())
+      drawWheel(await getUserWheelOptions(userId))
     })
     sideNavElementDel.addEventListener('click', async () => {
       await deleteWheelOption(wheelOption._id)
@@ -140,15 +189,3 @@ function populateNav(wheelOptions) {
     })
   })
 }
-
-async function populate() {
-  try {
-    const wheelOptions = await getWheelOptions()
-    populateNav(wheelOptions)
-    drawWheel(wheelOptions)
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-populate()
