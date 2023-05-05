@@ -4,8 +4,8 @@ const mongoose = require('mongoose')
 const indexRouter = require('./routes/index')
 const userRouter = require('./routes/users')
 const wheelOptionRouter = require('./routes/wheeloptions')
-
 require('dotenv').config()
+const PORT = process.env.PORT || 3000
 
 mongoose.connect(process.env.MONGO_URI, console.log('Connected to database'))
 
@@ -21,4 +21,4 @@ app.use('/', indexRouter)
 app.use('/api/v1/users', userRouter)
 app.use('/api/v1/wheeloptions', wheelOptionRouter)
 
-app.listen(process.env.PORT || 3000, console.log(`Server is listening...`))
+app.listen(PORT, console.log(`Server is listening on port ${PORT}`))
