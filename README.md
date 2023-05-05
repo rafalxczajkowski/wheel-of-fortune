@@ -1,3 +1,3 @@
 # wheel-of-fortune
 
-git add . & git commit -m 'readme.md change' & git push
+App created using Node.js, Express.js, MongoDB
