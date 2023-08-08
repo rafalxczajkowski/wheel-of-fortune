@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/39d3f91c-efb2-4873-abd9-2df4068812cd/resourceGroups/AppService-rafal-rg/providers/Microsoft.Web/sites/xrttrx-wheel-of-fortune",
+    "appService.deploySubpath": "."
+}
