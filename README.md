@@ -2,7 +2,7 @@
 
 ## Description
 
-This is an application built using JavaScript, Node.js, Express.js, MongoDB. It contains:
+Application built using JavaScript, Node.js, Express.js, MongoDB. It contains:
 
 - a wheel which on click makes random number of rotations to draw single option from those on the wheel
 - side hideable form to add, remove or edit wheel options.
