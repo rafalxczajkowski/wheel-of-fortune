@@ -1,13 +1,18 @@
+require('dotenv').config()
 const express = require('express')
 // const logger = require('morgan')
 const mongoose = require('mongoose')
 const indexRouter = require('./routes/index')
 const userRouter = require('./routes/users')
 const wheelOptionRouter = require('./routes/wheeloptions')
-require('dotenv').config()
 const PORT = process.env.PORT || 3000
+const MONGO_URI = process.env.MONGO_URI
 
-mongoose.connect(process.env.MONGO_URI, console.log('Connected to database'))
+console.log(MONGO_URI)
+
+mongoose
+  .connect(MONGO_URI, console.log('Connected to database'))
+  .catch((error) => console.log(error))
 
 const app = express()
 
