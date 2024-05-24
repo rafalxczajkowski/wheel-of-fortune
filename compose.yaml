@@ -1,8 +1,7 @@
 services:
-  server:
-    build:
-      context: .
+  web:
+    image: rafalxczajkowski/wheel-of-fortune
     ports:
       - 3000:3000
     env_file:
-      - .env
+      - ../wheel-of-fortune.env
