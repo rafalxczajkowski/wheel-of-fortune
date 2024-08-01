@@ -154,6 +154,7 @@ function populateNav(wheelOptions) {
   optionsContainer.classList.add('options-container')
   sideNav.prepend(optionsContainer)
 
+  let numberOfElement = 0
   wheelOptions.forEach((wheelOption) => {
     const sideNavElement = document.createElement('div')
     sideNavElement.classList.add('side-nav-element')
@@ -162,11 +163,15 @@ function populateNav(wheelOptions) {
     const sideNavElementText = document.createElement('input')
     sideNavElementText.classList.add('nav-element-text')
     sideNavElementText.setAttribute('maxlength', '20')
+    sideNavElementText.setAttribute('aria-label', 'Option name')
+    sideNavElementText.setAttribute('id', 'text-input-' + numberOfElement)
     sideNavElementText.value = wheelOption.name
     sideNavElement.append(sideNavElementText)
 
     const sideNavElementColor = document.createElement('input')
     sideNavElementColor.setAttribute('type', 'color')
+    sideNavElementColor.setAttribute('aria-label', 'Option color')
+    sideNavElementColor.setAttribute('id', 'color-input-' + numberOfElement)
     sideNavElementColor.classList.add('nav-element-color')
     sideNavElementColor.value = wheelOption.color
     sideNavElement.append(sideNavElementColor)
@@ -187,5 +192,6 @@ function populateNav(wheelOptions) {
       await deleteWheelOption(wheelOption._id)
       await populate()
     })
+    numberOfElement++
   })
 }
