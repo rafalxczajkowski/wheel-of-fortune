@@ -28,11 +28,13 @@ let userId
 async function populate() {
   try {
     userId = await getUserId()
-    const userWheelOptions = await getUserWheelOptions(userId)
-    populateNav(userWheelOptions)
-    drawWheel(userWheelOptions)
+    if (userId) {
+      const userWheelOptions = await getUserWheelOptions(userId)
+      populateNav(userWheelOptions)
+      drawWheel(userWheelOptions)
+    }
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
 
@@ -65,11 +67,10 @@ async function createUser() {
     const res = await axios.post('/api/v1/users', {})
     const userId_new = res.data._id
     localStorage.setItem('userId', userId_new)
-    console.log(`new user created, id: ${userId_new}`)
     await setDefaultWheelOptions(userId_new)
     return userId_new
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
 
@@ -82,7 +83,7 @@ async function setDefaultWheelOptions(userId) {
         createdBy: userId,
       })
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 }
@@ -115,7 +116,7 @@ addButton.addEventListener('click', async () => {
     })
     await populate()
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 })
 
@@ -131,7 +132,7 @@ async function update(id, value, prop) {
       [prop]: value,
     })
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
 
@@ -140,7 +141,7 @@ async function deleteWheelOption(id) {
   try {
     await axios.delete(`/api/v1/wheeloptions/${id}`)
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
 

@@ -9,8 +9,10 @@ const PORT = process.env.PORT || 3000
 const MONGO_URI = process.env.MONGO_URI
 
 mongoose
-  .connect(MONGO_URI, console.log('Connected to database'))
-  .catch((error) => console.log(error))
+  .connect(MONGO_URI)
+  .catch((error) =>
+    console.log('Error while connecting to database: \n' + error)
+  )
 
 const app = express()
 
